@@ -202,7 +202,7 @@ public:
     void retranslateUi(QMainWindow *MainWindow)
     {
         MainWindow->setWindowTitle(QCoreApplication::translate("MainWindow", "MainWindow", nullptr));
-        MainLabel->setText(QCoreApplication::translate("MainWindow", "Mandelbrot", nullptr));
+        MainLabel->setText(QCoreApplication::translate("MainWindow", "Mondelbrot", nullptr));
         pushButton->setText(QCoreApplication::translate("MainWindow", "build", nullptr));
         MainLabel_2->setText(QCoreApplication::translate("MainWindow", "Set build", nullptr));
         MainLabel_3->setText(QCoreApplication::translate("MainWindow", "n", nullptr));
