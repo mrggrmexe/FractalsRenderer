@@ -210,7 +210,7 @@ void MainWindow::buildPic(short s) {
             Complex z(0, 0);
 
             if (scale > 2) {
-                for (short r = 0; r < 256  && flag; ++r) {
+                for (short r = 0; r < 1500 && flag; ++r) {
 
                     for (short pow = 0; pow < s - 1; ++pow) {
                         z.powPermutation();
