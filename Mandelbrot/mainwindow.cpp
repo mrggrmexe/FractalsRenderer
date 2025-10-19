@@ -227,7 +227,7 @@ void MainWindow::buildPic(short s) {
 
                 }
             } else {
-                for (short r = 0; r < 256 && flag; ++r) {
+                for (short r = 0; r < 10000 && flag; ++r) {
 
                     for (short pow = 0; pow < s - 1; ++pow) {
                         z.powPermutation();
