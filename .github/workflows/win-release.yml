@@ -1,0 +1,45 @@
+name: Windows EXE (Qt 6)
+
+on:
+  workflow_dispatch:
+  push:
+    tags: ["v*"]
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Qt (6.9.3, win64_mingw)
+        uses: jurplel/install-qt-action@v4
+        with:
+          version: 6.9.3
+          host: windows
+          arch: win64_mingw
+          modules: qtbase
+          cache: true
+
+      - name: Configure (CMake, MinGW)
+        run: cmake -S . -B build -G "MinGW Makefiles" -DCMAKE_BUILD_TYPE=Release
+
+      - name: Build
+        run: cmake --build build --config Release -j 8
+
+      - name: Deploy Qt DLLs
+        run: |
+          windeployqt --release build\Mandelbrot.exe
+          if (!(Test-Path build\dist)) { New-Item -ItemType Directory build\dist | Out-Null }
+          Copy-Item build\Mandelbrot.exe build\dist\
+          Copy-Item build\*.dll -Destination build\dist\ -ErrorAction SilentlyContinue
+          # windeployqt обычно кладёт всё рядом с exe; на всякий случай соберём папку dist
+
+      - name: Zip artifact
+        run: powershell Compress-Archive -Path build\dist\* -DestinationPath Mandelbrot-win64.zip -Force
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Mandelbrot-win64
+          path: Mandelbrot-win64.zip
+
