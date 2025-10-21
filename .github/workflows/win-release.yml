@@ -21,7 +21,6 @@ jobs:
           version: 6.8.1           # можно 'latest'
           host: windows
           arch: win64_msvc2019_64
-          modules: qtbase
           cache: true
 
       # --- 3. Конфигурируем CMake (MSVC)
