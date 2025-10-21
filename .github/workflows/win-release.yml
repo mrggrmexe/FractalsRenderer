@@ -11,14 +11,15 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install Qt (6.9.3, win64_mingw)
-        uses: jurplel/install-qt-action@v4
-        with:
-          version: 6.9.3
-          host: windows
-          arch: win64_mingw
-          modules: qtbase
-          cache: true
+      - name: Install Qt (Windows MinGW)
+      uses: jurplel/install-qt-action@v4
+      with:
+        version: 6.8.1      # или можно 'latest'
+        host: windows
+        arch: win64_mingw
+        modules: qtbase
+        cache: true
+
 
       - name: Configure (CMake, MinGW)
         run: cmake -S . -B build -G "MinGW Makefiles" -DCMAKE_BUILD_TYPE=Release
