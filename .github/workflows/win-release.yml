@@ -1,4 +1,4 @@
-name: Windows EXE (Qt 6 MSVC)
+name: Windows EXE (Qt 6, MSVC 2022)
 
 on:
   workflow_dispatch:
@@ -10,42 +10,45 @@ jobs:
     runs-on: windows-latest
 
     steps:
-      # --- 1. Клонируем проект
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # --- 2. Устанавливаем Qt (MSVC 2019 64-bit)
-      - name: Install Qt (Windows MSVC)
+      # Устанавливаем Qt 6.x для MSVC 2022 (без modules:)
+      - name: Install Qt (Windows, MSVC 2022)
         uses: jurplel/install-qt-action@v4
         with:
-          version: 6.8.1           # можно 'latest'
+          version: 6.8.1          # можно 'latest'
           host: windows
-          arch: win64_msvc2019_64
+          arch: win64_msvc2022_64
           cache: true
 
-      # --- 3. Конфигурируем CMake (MSVC)
-      - name: Configure (CMake, MSVC)
-        run: cmake -S . -B build -G "Visual Studio 17 2022" -A x64 -DCMAKE_BUILD_TYPE=Release
+      # (необязательно) Диагностика: покажем, что Qt найден и где он лежит
+      - name: Show Qt env
+        run: |
+          echo Qt6_DIR=%Qt6_DIR%
+          where qmake
+          qmake -v
 
-      # --- 4. Сборка проекта
+      # Конфигурация CMake под MSVC 2022 + прокидываем CMAKE_PREFIX_PATH из %Qt6_DIR%
+      - name: Configure (CMake, MSVC 2022)
+        run: cmake -S . -B build -G "Visual Studio 17 2022" -A x64 -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH=%Qt6_DIR%
+
       - name: Build
         run: cmake --build build --config Release
 
-      # --- 5. Развёртывание Qt DLL рядом с exe
+      # Разворачивание Qt DLL рядом с exe
       - name: Deploy Qt DLLs
         run: |
-          cd build/Release
+          cd build\Release
           windeployqt Mandelbrot.exe
           if (!(Test-Path dist)) { New-Item -ItemType Directory dist | Out-Null }
           Copy-Item Mandelbrot.exe dist\
           Copy-Item *.dll -Destination dist\ -ErrorAction SilentlyContinue
-          cd ../..
+          cd ..\..
 
-      # --- 6. Архивируем результат
       - name: Zip artifact
-        run: powershell Compress-Archive -Path build/Release/dist/* -DestinationPath Mandelbrot-win64.zip -Force
+        run: powershell Compress-Archive -Path build\Release\dist\* -DestinationPath Mandelbrot-win64.zip -Force
 
-      # --- 7. Загружаем артефакт (готовый .exe + DLL)
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
