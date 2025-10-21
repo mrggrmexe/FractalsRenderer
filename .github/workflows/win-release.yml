@@ -13,7 +13,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # Устанавливаем Qt 6.x для MSVC 2022 (без modules:)
       - name: Install Qt (Windows, MSVC 2022)
         uses: jurplel/install-qt-action@v4
         with:
@@ -22,32 +21,30 @@ jobs:
           arch: win64_msvc2022_64
           cache: true
 
-      # (необязательно) Диагностика: покажем, что Qt найден и где он лежит
       - name: Show Qt env
         run: |
           echo Qt6_DIR=%Qt6_DIR%
           where qmake
           qmake -v
 
-      # Конфигурация CMake под MSVC 2022 + прокидываем CMAKE_PREFIX_PATH из %Qt6_DIR%
+      # КОНФИГУРИРУЕМ ИМЕННО ПОДПАПКУ Mandelbrot/
       - name: Configure (CMake, MSVC 2022)
-        run: cmake -S . -B build -G "Visual Studio 17 2022" -A x64 -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH=%Qt6_DIR%
+        run: cmake -S Mandelbrot -B Mandelbrot/build -G "Visual Studio 17 2022" -A x64 -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH=%Qt6_DIR%
 
       - name: Build
-        run: cmake --build build --config Release
+        run: cmake --build Mandelbrot/build --config Release
 
-      # Разворачивание Qt DLL рядом с exe
       - name: Deploy Qt DLLs
         run: |
-          cd build\Release
+          cd Mandelbrot\build\Release
           windeployqt Mandelbrot.exe
           if (!(Test-Path dist)) { New-Item -ItemType Directory dist | Out-Null }
           Copy-Item Mandelbrot.exe dist\
           Copy-Item *.dll -Destination dist\ -ErrorAction SilentlyContinue
-          cd ..\..
+          cd ..\..\..
 
       - name: Zip artifact
-        run: powershell Compress-Archive -Path build\Release\dist\* -DestinationPath Mandelbrot-win64.zip -Force
+        run: powershell Compress-Archive -Path Mandelbrot/build/Release/dist/* -DestinationPath Mandelbrot-win64.zip -Force
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
