@@ -35,7 +35,7 @@
      <string notr="true">color: rgb(211, 224, 255);</string>
     </property>
     <property name="text">
-     <string>Mondelbrot</string>
+     <string>Mαndelbrot</string>
     </property>
    </widget>
    <widget class="QWidget" name="glow" native="true">
