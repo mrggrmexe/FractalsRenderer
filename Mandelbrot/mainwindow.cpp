@@ -209,44 +209,27 @@ void MainWindow::buildPic(short s) {
             short need = 0;
             Complex z(0, 0);
 
-            if (scale > 2) {
-                for (short r = 0; r < 1500 && flag; ++r) {
+            for (short r = 0; r < 2000 && flag; ++r) {
 
-                    for (short pow = 0; pow < s - 1; ++pow) {
-                        z.powPermutation();
-                    }
+                for (short pow = 0; pow < s - 1; ++pow) {
+                    z.powPermutation();
+                }
 
-                    z.addOther(c);
+                z.addOther(c);
 
 
-                    if (z.ro() >= 2) {
-                        flag = 0;
-
-                    }
-                    need = r;
+                if (z.ro() >= 2) {
+                    flag = 0;
 
                 }
-            } else {
-                for (short r = 0; r < 10000 && flag; ++r) {
+                need = r;
 
-                    for (short pow = 0; pow < s - 1; ++pow) {
-                        z.powPermutation();
-                    }
-
-                    z.addOther(c);
-
-
-                    if (z.ro() >= 2) {
-                        flag = 0;
-
-                    }
-                    need = r;
-
-                }
             }
 
             if (!flag) {
-                group->addToGroup(picture->addRect(i, j, 1, 0, QColor(((need * 20) % 100) % 255, need % 255, ((need * 20) % 255 + 25))));
+                group->addToGroup(picture->addRect(i, j, 1, 0, QColor(((need * 20) % 100) % 255,
+                                                                      need % 255,
+                                                                      ((need * 20) % 255 + 25))));
                 ++colored;
             } else {
                 group->addToGroup(picture->addRect(i, j, 1, 0, QColor(0, 0, 0)));
@@ -259,13 +242,34 @@ void MainWindow::buildPic(short s) {
 
     ui->glow->setGeometry(40, 550, 0, 3);
 
+    QString oldStyle_label = ui->label->styleSheet();
+    QString oldStyle_label_2 = ui->label_2->styleSheet();
+    QString oldStyle_label_3 = ui->label_3->styleSheet();
+    QString oldStyle_label_4 = ui->label_3->styleSheet();
+
     ui->label->setText(QString::fromStdString(std::to_string(int(scale))));
     ui->label_2->setText(QString::fromStdString(std::to_string(int(starti))) + " " +
                          QString::fromStdString(std::to_string(int(startj))));
     ui->label_3->setText(QString::fromStdString(std::to_string(black)));
     ui->label_4->setText(QString::fromStdString(std::to_string(colored)));
-
     ui->label_5->setText("");
+
+    ui->label->setStyleSheet(oldStyle_label);
+    ui->label_2->setStyleSheet(oldStyle_label_2);
+    ui->label_3->setStyleSheet(oldStyle_label_3);
+    ui->label_4->setStyleSheet(oldStyle_label_4);
+
+    ui->label->setStyleSheet("color: #CF69FF;");
+    ui->label_2->setStyleSheet("color: #CF69FF;");
+    ui->label_3->setStyleSheet("color: #CF69FF;");
+    ui->label_4->setStyleSheet("color: #CF69FF;");
+
+    delay1(1000);
+
+    ui->label->setStyleSheet(oldStyle_label);
+    ui->label_2->setStyleSheet(oldStyle_label_2);
+    ui->label_3->setStyleSheet(oldStyle_label_3);
+    ui->label_4->setStyleSheet(oldStyle_label_4);
 
     inproccess = 0;
 
@@ -304,10 +308,17 @@ void MainWindow::on_pushButton_clicked()
 
 void MainWindow::on_pushButton_pressed()
 {
+    QString oldStyleSheet = ui->pushButton->styleSheet();
+    ui->pushButton->setStyleSheet("background-color: #CF69FF; color: black;");
     for (short i = 0; i < 5; ++i) {
         delay1(10);
-        ui->pushButton->setGeometry(20 + i / 2, 150 + i / 2, 261 - i, 41 - i);
+        ui->pushButton->setGeometry(20 + i / 2,
+                                    150 + i / 2,
+                                    261 - i,
+                                    41 - i);
     }
+    delay1(20);
+    ui->pushButton->setStyleSheet(oldStyleSheet);
 }
 
 

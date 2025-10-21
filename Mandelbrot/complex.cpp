@@ -26,12 +26,12 @@ void Complex::setY(double _y) {
 
 double Complex::getX() {
 
-    return x;
+    return this->x;
 }
 
 double Complex::getY() {
 
-    return y;
+    return this->y;
 }
 
 
