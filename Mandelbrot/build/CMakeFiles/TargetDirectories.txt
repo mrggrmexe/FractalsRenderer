@@ -1,5 +1,0 @@
-/Users/mrggrm/Documents/GitHub/FractalsRenderer/Mandelbrot/build/CMakeFiles/Mandelbrot.dir
-/Users/mrggrm/Documents/GitHub/FractalsRenderer/Mandelbrot/build/CMakeFiles/edit_cache.dir
-/Users/mrggrm/Documents/GitHub/FractalsRenderer/Mandelbrot/build/CMakeFiles/rebuild_cache.dir
-/Users/mrggrm/Documents/GitHub/FractalsRenderer/Mandelbrot/build/CMakeFiles/Mandelbrot_autogen_timestamp_deps.dir
-/Users/mrggrm/Documents/GitHub/FractalsRenderer/Mandelbrot/build/CMakeFiles/Mandelbrot_autogen.dir
