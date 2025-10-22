@@ -1,0 +1,13 @@
+build/
+*/build/
+build-win/
+CMakeFiles/
+CMakeCache.txt
+*.user
+*.pro.user
+*.o
+*.obj
+*.pdb
+*.ilk
+.idea/
+.vscode/
