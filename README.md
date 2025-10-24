@@ -3,4 +3,4 @@ Qt Application. Now it includes only Mandelbrot set.
 
 <img width="2222" height="1432" alt="Снимок экрана 2025-10-22 в 00 46 25" src="https://github.com/user-attachments/assets/09e4f668-7c7d-49fd-8fdc-c366139327c9" />
 <img width="2224" height="1426" alt="Снимок экрана 2025-10-22 в 00 55 27" src="https://github.com/user-attachments/assets/5f474ced-3422-4326-b4b1-9cb87558417c" />
-<video src="https://github.com/user-attachments/assets/c5728323-0832-4b58-99f5-e61bc8ca7324" width="640" controls></video>
+![Demo](https://raw.githubusercontent.com/mrggrmexe/FractalsRenderer/main/media/demo.gif)
