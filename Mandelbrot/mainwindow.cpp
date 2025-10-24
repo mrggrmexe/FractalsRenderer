@@ -297,19 +297,42 @@ void MainWindow::on_pushButton_clicked()
     startj = 240;
 
     delay1(100);
-    buildPic(std::stoi(ui->lineEdit->text().toStdString()));
 
-    if (!glow) {
-        play_animation();
+    QString check = ui->lineEdit->text();
+    bool success = (check.size() > 0);
+    for (int64_t i = 0; i < check.size() && success; ++i) {
+        if (check[i] < '0' || check[i] > '9') {
+            success = 0;
+        }
     }
 
-
+    if (success) {
+        buildPic(std::stoi(check.toStdString()));
+        if (!glow) {
+            play_animation();
+        }
+    } else {
+        QString oldStyle = ui->pushButton->styleSheet();
+        ui->pushButton->setStyleSheet("background-color: #ff436a; color: black;");
+        delay1(500);
+        ui->pushButton->setStyleSheet(oldStyle);
+    }
 }
 
 void MainWindow::on_pushButton_pressed()
 {
+    QString check = ui->lineEdit->text();
+    bool success = (check.size() > 0);
+    for (int64_t i = 0; i < check.size() && success; ++i) {
+        if (check[i] < '0' || check[i] > '9') {
+            success = 0;
+        }
+    }
+
     QString oldStyleSheet = ui->pushButton->styleSheet();
-    ui->pushButton->setStyleSheet("background-color: #CF69FF; color: black;");
+    if (success) {
+        ui->pushButton->setStyleSheet("background-color: #43ff89; color: black;");
+    }
     for (short i = 0; i < 5; ++i) {
         delay1(10);
         ui->pushButton->setGeometry(20 + i / 2,
@@ -317,8 +340,11 @@ void MainWindow::on_pushButton_pressed()
                                     261 - i,
                                     41 - i);
     }
-    delay1(20);
-    ui->pushButton->setStyleSheet(oldStyleSheet);
+    if (success) {
+        delay1(20);
+        ui->pushButton->setStyleSheet(oldStyleSheet);
+    }
+
 }
 
 
