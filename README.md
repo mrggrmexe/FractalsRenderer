@@ -3,7 +3,7 @@ Qt Application. Now it includes only Mandelbrot set.
 
 # Demo video
 <p align="center">
-<img src="./media/demo.gif" width="34%" height="34%"/>
+<img src="./media/demo.gif" width="40%" height="40%"/>
 </p>
 
 # Demo images
