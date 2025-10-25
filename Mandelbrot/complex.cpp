@@ -63,10 +63,9 @@ double Complex::ro() {
 
 void Complex::powPermutation() {
 
-    double tmp = x;
-
-     x = x * x - y * y;
-     y = tmp * y + y * tmp;
+    double powh = this->x;
+     this->x = this->x * this->x - this->y * this->y;
+     this->y = this->y * powh + this->y * powh;
 
 }
 

@@ -209,7 +209,7 @@ void MainWindow::buildPic(short s) {
             short need = 0;
             Complex z(0, 0);
 
-            for (short r = 0; r < 2000 && flag; ++r) {
+            for (short r = 0; r < 200 && flag; ++r) {
 
                 for (short pow = 0; pow < s - 1; ++pow) {
                     z.powPermutation();
@@ -227,8 +227,8 @@ void MainWindow::buildPic(short s) {
             }
 
             if (!flag) {
-                group->addToGroup(picture->addRect(i, j, 1, 0, QColor(((need * 20) % 100) % 255,
-                                                                      need % 255,
+                group->addToGroup(picture->addRect(i, j, 1, 0, QColor(((need * 20) % 100),
+                                                                      need % 200,
                                                                       ((need * 20) % 255 + 25))));
                 ++colored;
             } else {
