@@ -96,23 +96,29 @@ QString ImageRender::getPath()
 
 bool ImageRender::render()
 {
-    if (!img.load(PATH)) return 0;
+    if (!img.load(PATH)) return false;
     img = img.scaled(height, width,
                      Qt::IgnoreAspectRatio,
                      Qt::SmoothTransformation);
-
 
     QPixmap pixmap = QPixmap::fromImage(img);
     graphicsView->setGeometry(x, y, height, width);
     graphicsView->setStyleSheet("background: transparent");
     graphicsView->setFrameShape(QFrame::NoFrame);
-    scene->addPixmap(pixmap);
 
+    if (!pixmapItem) {
+        pixmapItem = scene->addPixmap(pixmap);
+    } else {
+        pixmapItem->setPixmap(pixmap);
+    }
 
     graphicsView->setScene(scene);
     graphicsView->show();
-    return 1;
+    return true;
 }
+
+
+
 
 bool ImageRender::render(uint16_t _height, uint16_t _width)
 {

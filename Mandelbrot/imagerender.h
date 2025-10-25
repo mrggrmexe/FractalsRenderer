@@ -7,6 +7,9 @@
 #include "ui_mainwindow.h"
 #include <QMainWindow>
 #include <iostream>
+#include <QGraphicsPixmapItem>
+#include <QPixmap>
+#include <QFrame>
 
 
 QT_BEGIN_NAMESPACE
@@ -70,10 +73,11 @@ private:
     uint16_t       height, width;
     uint16_t       x, y;
     QString        PATH;
-    QGraphicsView  *graphicsView;
-    QGraphicsScene *scene;
+    QGraphicsView  *graphicsView = nullptr;
+    QGraphicsScene *scene = nullptr;
     QImage         img;
     Ui::MainWindow *ui;
+    QGraphicsPixmapItem* pixmapItem = nullptr;
 };
 
 #endif // IMAGERENDER_H
