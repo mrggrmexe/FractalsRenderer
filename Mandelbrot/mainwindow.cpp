@@ -61,7 +61,9 @@ QGraphicsDropShadowEffect *effect;
 QGraphicsDropShadowEffect *effectglow;
 
 myClassScene *picture;
+myClassScene *prePicture;
 QGraphicsItemGroup *group;
+QGraphicsItemGroup *preGroup;
 
 std::vector<std::pair<QLabel*, QLineEdit*>> valueChoose;
 
@@ -143,15 +145,20 @@ void MainWindow::buildPic(short s) {
 
     if (picture == nullptr) {
 
+        prePicture = new myClassScene;
         picture = new myClassScene;
         group = new QGraphicsItemGroup;
+        preGroup = new QGraphicsItemGroup;
         picture->addItem(group);
+        prePicture->addItem(preGroup);
         ui->myView->setScene(picture);
+        ui->myView2->setScene(prePicture);
 
         int width = 560;
         int height = 420;
 
         picture->setSceneRect(0,0,width,height);
+        prePicture->setSceneRect(0,0,width,height);
 
     } else {
 
@@ -162,12 +169,24 @@ void MainWindow::buildPic(short s) {
                 delete item;
             }
         }
+        foreach(QGraphicsItem *item, prePicture->items(preGroup->boundingRect())) {
+            if(item->group() == preGroup) {
+
+                delete item;
+            }
+        }
         delete picture;
+        delete prePicture;
         picture = new myClassScene;
+        prePicture = new myClassScene;
         group = new QGraphicsItemGroup;
+        preGroup = new QGraphicsItemGroup;
         picture->addItem(group);
+        prePicture->addItem(preGroup);
         ui->myView->setScene(picture);
+        ui->myView2->setScene(prePicture);
         picture->setSceneRect(0,0,560,420);
+        prePicture->setSceneRect(0,0,560,420);
 
     }
 
@@ -180,8 +199,52 @@ void MainWindow::buildPic(short s) {
     int black = 0;
 
     ui->myView->hide();
+    ui->myView2->hide();
 
     ui->choose->setGeometry(-800, -800, 0, 0);
+
+    for (short i = 0; i < 560; i += 25) {
+        for (short j = 0; j < 480; j += 25) {
+            double m; double n;
+            m = (starti + i / scale) / (240.0);
+            n = (startj - j / scale) / (240.0);
+            Complex c(m, n);
+            bool flag = 1;
+            short need = 0;
+            Complex z(0, 0);
+
+            for (short r = 0; r < 200 && flag; ++r) {
+
+                for (short pow = 0; pow < s - 1; ++pow) {
+                    z.powPermutation();
+                }
+
+                z.addOther(c);
+
+
+                if (z.ro() >= 2) {
+                    flag = 0;
+
+                }
+                need = r;
+
+            }
+
+            for (short k1 = 0; k1 < 25; ++k1) {
+                for (short k2 = 0; k2 < 25; ++k2) {
+                    if (!flag) {
+                        preGroup->addToGroup(prePicture->addRect(i + k1, j + k2, 1, 0, QColor(((need * 20) % 100),
+                                                                              need % 200,
+                                                                              ((need * 20) % 255 + 25))));
+                    } else {
+                        preGroup->addToGroup(prePicture->addRect(i + k1, j + k2, 1, 0, QColor(0, 0, 0)));
+                    }
+                }
+            }
+        }
+    }
+
+    ui->myView2->show();
 
     for (short i = 0; i < 560; ++i) {
         for (short j = 0; j < 480; ++j) {
@@ -238,6 +301,7 @@ void MainWindow::buildPic(short s) {
 
         }
     }
+    ui->myView2->hide();
     ui->myView->show();
 
     ui->glow->setGeometry(40, 550, 0, 3);

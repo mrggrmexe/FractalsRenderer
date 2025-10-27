@@ -406,6 +406,24 @@ border-radius: 10px;
       <string notr="true">background-color: rgb(255, 73, 89);</string>
      </property>
     </widget>
+    <widget class="QGraphicsView" name="myView2">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>20</y>
+       <width>560</width>
+       <height>420</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">border-width: 5px;
+border-radius: 10px;
+</string>
+     </property>
+    </widget>
+    <zorder>myView</zorder>
+    <zorder>myView2</zorder>
+    <zorder>kostil</zorder>
    </widget>
    <widget class="QWidget" name="choose" native="true">
     <property name="geometry">

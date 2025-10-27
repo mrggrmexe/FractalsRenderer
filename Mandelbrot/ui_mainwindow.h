@@ -44,6 +44,7 @@ public:
     QWidget *widget_3;
     QGraphicsView *myView;
     QWidget *kostil;
+    QGraphicsView *myView2;
     QWidget *choose;
     QLabel *label_5;
 
@@ -60,6 +61,7 @@ public:
         MainLabel->setGeometry(QRect(55, 10, 171, 31));
         QFont font;
         font.setPointSize(24);
+        font.setBold(true);
         MainLabel->setFont(font);
         MainLabel->setStyleSheet(QString::fromUtf8("color: rgb(211, 224, 255);"));
         glow = new QWidget(centralwidget);
@@ -181,6 +183,15 @@ public:
         kostil->setObjectName("kostil");
         kostil->setGeometry(QRect(20, 20, 560, 420));
         kostil->setStyleSheet(QString::fromUtf8("background-color: rgb(255, 73, 89);"));
+        myView2 = new QGraphicsView(widget_3);
+        myView2->setObjectName("myView2");
+        myView2->setGeometry(QRect(20, 20, 560, 420));
+        myView2->setStyleSheet(QString::fromUtf8("border-width: 5px;\n"
+"border-radius: 10px;\n"
+""));
+        myView->raise();
+        myView2->raise();
+        kostil->raise();
         choose = new QWidget(centralwidget);
         choose->setObjectName("choose");
         choose->setGeometry(QRect(-800, -800, 120, 80));
