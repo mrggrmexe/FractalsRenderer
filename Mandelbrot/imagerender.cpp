@@ -113,6 +113,7 @@ bool ImageRender::render()
         pixmapItem->setPixmap(pixmap);
     }
     scene->setSceneRect(pixmapItem->boundingRect());
+
     graphicsView->setScene(scene);
     graphicsView->show();
     return true;
