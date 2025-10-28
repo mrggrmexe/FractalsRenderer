@@ -80,20 +80,20 @@ private:
     QThread* workerThread = nullptr;
     FractalWorker* worker = nullptr;
 
-    double m_scale  = 1.0;
-    double m_starti = -280.0;
-    double m_startj =  240.0;
+    long double m_scale  = 1.0;
+    long double m_starti = -280.0;
+    long double m_startj =  240.0;
 
     bool m_selecting = false;
     QPoint m_selStart;
     QWidget* m_chooseOverlay = nullptr;
 
-    int m_lastProgress = -1;
+    int64_t m_lastProgress = -1;
 
-    int viewWidth  = 560;
-    int viewHeight = 420;
+    int64_t viewWidth  = 560;
+    int64_t viewHeight = 420;
 
-    const int kGlowMaxWidth = 911;
+    const int64_t kGlowMaxWidth = 911;
 };
 
 #endif // MAINWINDOW_H
