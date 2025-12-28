@@ -1,0 +1,60 @@
+name: CI
+
+on:
+  push:
+    branches: ["main", "master"]
+  pull_request:
+
+jobs:
+  build-linux:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install Qt 6
+        uses: jurplel/install-qt-action@v2
+        with:
+          version: '6.6.1'
+          arch: 'desktop'
+
+      - name: Configure
+        run: cmake -B build -S . -DCMAKE_PREFIX_PATH=$HOME/Qt/6.6.1/gcc_64
+
+      - name: Build
+        run: cmake --build build --parallel
+
+  build-windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v2
+        with:
+          version: '6.6.1'
+          host: 'windows'
+          arch: 'win64_msvc'
+
+      - name: Configure
+        run: cmake -B build -S . -G "Visual Studio 17 2022" -A x64
+
+      - name: Build
+        run: cmake --build build --config Release
+
+  build-macos:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v2
+        with:
+          version: '6.6.1'
+          host: 'mac'
+          arch: 'clang_64'
+
+      - name: Configure
+        run: cmake -B build -S . -DCMAKE_PREFIX_PATH=$HOME/Qt/6.6.1/clang_64
+
+      - name: Build
+        run: cmake --build build --parallel
